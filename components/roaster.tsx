@@ -60,7 +60,6 @@ export function Roaster() {
     },
   });
 
-  const [githubUrl, setGithubUrl] = useState("");
   const [roast, setRoast] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingRoast, setLoadingRoast] = useState("");
@@ -203,7 +202,7 @@ export function Roaster() {
                 </Button>
               </form>
               {loading && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                <div className="mt-4 p-4 bg-gray-100 rounded-md">
                   <div className="flex items-center space-x-2 overflow-hidden">
                     <Loader2 className="w-4 h-4 animate-spin" />
                     <p className="text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
@@ -213,7 +212,7 @@ export function Roaster() {
                 </div>
               )}
               {roast && !loading && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                <div className="mt-4 p-4 bg-gray-100 rounded-md">
                   <div className="flex justify-between items-center mb-2">
                     <h2 className="text-lg font-semibold">
                       @{username}
