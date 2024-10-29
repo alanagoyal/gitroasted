@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     domSettleTimeoutMs: 10000,
   });
 
-  await stagehand.init({ modelName: "claude-3-5-sonnet-20241022" });
+  await stagehand.init({ modelName: "gpt-4o-mini" });
   await stagehand.page.goto(githubUrl);
   const roast = await stagehand.extract({
     instruction: "Roast me. Be mean.",
