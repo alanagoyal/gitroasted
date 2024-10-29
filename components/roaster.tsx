@@ -243,7 +243,7 @@ export function Roaster() {
         </Card>
       </div>
       <footer className="text-sm text-gray-400">
-        built with by <a href="https://basecase.vc" className="underline">basecase</a> 🤝🏼 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
+        built by <a href="https://basecase.vc" className="underline">basecase</a> 🤝🏼 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
       </footer>
     </main>
   );
