@@ -16,7 +16,12 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Roasted",
-  description: "Roasted: Github Profile Roaster",
+  description: "Roasted: GitHub Profile Roaster",
+  openGraph: {
+    title: "Roasted",
+    description: "Roasted: GitHub Profile Roaster",
+    images: ["/api/og"],
+  },
 };
 
 export default function RootLayout({

@@ -65,9 +65,12 @@ export function Roaster() {
     }
   }, [roast]);
 
-  const extractUsername = (url: string) => {
-    const match = url.match(/github\.com\/([^/]+)/);
-    return match ? match[1] : null;
+  const extractUsername = (input: string) => {
+    if (input.startsWith("http")) {
+      const match = input.match(/github\.com\/([^/]+)/);
+      return match ? match[1] : null;
+    }
+    return input; // Assume input is a username if it doesn't start with "http"
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,7 +80,7 @@ export function Roaster() {
 
     const username = extractUsername(githubUrl);
     if (!username) {
-      setRoast("Invalid GitHub URL. Please try again.");
+      setRoast("Invalid input. Please enter a valid GitHub URL or username.");
       setLoading(false);
       return;
     }
@@ -88,7 +91,7 @@ export function Roaster() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ githubUrl }),
+        body: JSON.stringify({ githubUrl: `https://github.com/${username}` }),
       });
 
       if (!response.ok) {
@@ -134,10 +137,10 @@ export function Roaster() {
         <Card className="w-full max-w-lg">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-left">
-              Github Profile Roaster
+              GitHub Profile Roaster
             </CardTitle>
             <CardDescription className="text-left">
-              Paste your Github profile below to get roasted
+              Paste your GitHub profile below to get roasted
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -145,8 +148,8 @@ export function Roaster() {
               <div className="relative">
                 <GitHubLogoIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <Input
-                  type="url"
-                  placeholder="https://github.com/username"
+                  type="text"
+                  placeholder="GitHub username or URL"
                   value={githubUrl}
                   onChange={(e) => setGithubUrl(e.target.value)}
                   required
