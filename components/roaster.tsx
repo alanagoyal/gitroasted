@@ -65,10 +65,22 @@ export function Roaster() {
     }
   }, [roast]);
 
+  const extractUsername = (url: string) => {
+    const match = url.match(/github\.com\/([^/]+)/);
+    return match ? match[1] : null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setRoast("");
+
+    const username = extractUsername(githubUrl);
+    if (!username) {
+      setRoast("Invalid GitHub URL. Please try again.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch("/api/roast", {
@@ -106,72 +118,86 @@ export function Roaster() {
     }
   };
 
+  const backgroundImage = '/fireplace.gif';
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-100">
-      <Card className="w-full max-w-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-left">
-            GitHub Profile Roaster
-          </CardTitle>
-          <CardDescription className="text-left">
-            Paste your Github profile below to get roasted
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="relative">
-              <GitHubLogoIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
-              <Input
-                type="url"
-                placeholder="https://github.com/username"
-                value={githubUrl}
-                onChange={(e) => setGithubUrl(e.target.value)}
-                required
-                className="pl-10"
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Roasting..." : "Roast Me!"}
-            </Button>
-          </form>
-          {loading && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-md">
-              <div className="flex items-center space-x-2 overflow-hidden">
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <p className="text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                  {loadingRoast}
-                </p>
+    <main
+      className="flex min-h-screen flex-col items-center justify-between p-24"
+      style={{
+        backgroundColor: 'black',
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="flex-grow flex items-center justify-center w-full">
+        <Card className="w-full max-w-lg">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-left">
+              Github Profile Roaster
+            </CardTitle>
+            <CardDescription className="text-left">
+              Paste your Github profile below to get roasted
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="relative">
+                <GitHubLogoIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
+                <Input
+                  type="url"
+                  placeholder="https://github.com/username"
+                  value={githubUrl}
+                  onChange={(e) => setGithubUrl(e.target.value)}
+                  required
+                  className="pl-10"
+                />
               </div>
-            </div>
-          )}
-          {roast && !loading && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-md">
-              <div className="flex justify-between items-center mb-2">
-                <h2 className="text-lg font-semibold">Your Roast:</h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleCopy}
-                  aria-label={copied ? "Copied" : "Copy roast"}
-                >
-                  {copied ? (
-                    <CheckIcon className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <CopyIcon className="h-4 w-4" />
-                  )}
-                </Button>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Roasting..." : "Roast Me!"}
+              </Button>
+            </form>
+            {loading && (
+              <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                <div className="flex items-center space-x-2 overflow-hidden">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <p className="text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                    {loadingRoast}
+                  </p>
+                </div>
               </div>
-              <p
-                ref={roastRef}
-                className="text-gray-700 cursor-default flex-grow"
-                aria-live="polite"
-                dangerouslySetInnerHTML={{ __html: roast }}
-              ></p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-      <footer className="mt-8 text-sm text-gray-500">
+            )}
+            {roast && !loading && (
+              <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                <div className="flex justify-between items-center mb-2">
+                  <h2 className="text-lg font-semibold">
+                    @{extractUsername(githubUrl)}
+                  </h2>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleCopy}
+                    aria-label={copied ? "Copied" : "Copy roast"}
+                  >
+                    {copied ? (
+                      <CheckIcon className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <CopyIcon className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+                <p
+                  ref={roastRef}
+                  className="text-sm text-gray-700 cursor-default flex-grow"
+                  aria-live="polite"
+                  dangerouslySetInnerHTML={{ __html: roast }}
+                ></p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+      <footer className="text-sm text-gray-400">
         built with by <a href="https://basecase.vc" className="underline">basecase</a> 🤝🏼 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
       </footer>
     </main>

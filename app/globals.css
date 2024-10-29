@@ -62,6 +62,16 @@ body {
   }
 }
 
+.bg-fire {
+  background-image: url('/fireplace.gif');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-fire.paused {
+  animation: none;
+}
+
 @layer base {
   * {
     @apply border-border;
