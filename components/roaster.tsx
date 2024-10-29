@@ -12,17 +12,14 @@ import {
 } from "@/components/ui/card";
 import { GitHubLogoIcon, CopyIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Loader2 } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
@@ -150,7 +147,6 @@ export function Roaster() {
       try {
         await navigator.clipboard.writeText(roastRef.current.innerText);
         setCopied(true);
-        toast({ description: "Copied to clipboard" });
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
         console.error('Failed to copy text: ', err);
@@ -189,10 +185,14 @@ export function Roaster() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input 
-                          placeholder="GitHub username or URL"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <GitHubLogoIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+                          <Input 
+                            placeholder="GitHub username or URL"
+                            className="pl-8"
+                            {...field}
+                          />
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
