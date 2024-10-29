@@ -48,7 +48,7 @@ export function Roaster() {
           setLoadingRoast(loadingRoasts[index]);
           index = (index + 1) % (loadingRoasts.length - 1) + 1;
         }
-      }, 2000);
+      }, 5000);
     } else {
       setLoadingRoast("");
     }
