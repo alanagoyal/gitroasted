@@ -1,6 +1,6 @@
 # Roasted
 
-This project uses [Stagehand](https://github.com/browserbase/stagehand) by [Browserbase](https://browserbase.com) to automate the browser to roast a given Github profile.
+This project uses [Stagehand](https://github.com/browserbase/stagehand) by [Browserbase](https://browserbase.com) to automate the browser to roast a given GitHub profile.
 
 ## Features
 
