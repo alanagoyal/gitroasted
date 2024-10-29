@@ -14,9 +14,6 @@ export async function POST(request: Request) {
 
   await stagehand.init({ modelName: "claude-3-5-sonnet-20241022" });
   await stagehand.page.goto(githubUrl);
-  await stagehand.act({
-    action: "click on the repositories",
-  });
   const roast = await stagehand.extract({
     instruction: "Roast me. Be mean.",
     schema: z.object({

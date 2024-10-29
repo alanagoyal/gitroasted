@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, CopyIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
@@ -34,14 +34,20 @@ export function Roaster() {
   const [loading, setLoading] = useState(false);
   const [loadingRoast, setLoadingRoast] = useState("");
   const roastRef = useRef<HTMLParagraphElement>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (loading) {
       let index = 0;
       interval = setInterval(() => {
-        setLoadingRoast(loadingRoasts[index]);
-        index = (index + 1) % loadingRoasts.length;
+        if (index === 0) {
+          setLoadingRoast(loadingRoasts[index]);
+          index++;
+        } else {
+          setLoadingRoast(loadingRoasts[index]);
+          index = (index + 1) % (loadingRoasts.length - 1) + 1;
+        }
       }, 2000);
     } else {
       setLoadingRoast("");
@@ -90,11 +96,16 @@ export function Roaster() {
     }
   };
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     if (roastRef.current) {
-      navigator.clipboard.writeText(roastRef.current.innerText).then(() => {
+      try {
+        await navigator.clipboard.writeText(roastRef.current.innerText);
+        setCopied(true);
         toast({ description: "Copied to clipboard" });
-      });
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+      }
     }
   };
 
@@ -138,18 +149,27 @@ export function Roaster() {
           )}
           {roast && !loading && (
             <div className="mt-6 p-4 bg-gray-100 rounded-md">
-              <h2 className="text-lg font-semibold mb-2">Your Roast:</h2>
-              <div className="flex items-center">
-                <p
-                  ref={roastRef}
-                  className="text-gray-700 cursor-default flex-grow"
-                  aria-live="polite"
-                  dangerouslySetInnerHTML={{ __html: roast }}
-                ></p>
-                <Button onClick={handleCopy} className="ml-2">
-                  Copy
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-lg font-semibold">Your Roast:</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleCopy}
+                  aria-label={copied ? "Copied" : "Copy roast"}
+                >
+                  {copied ? (
+                    <CheckIcon className="h-4 w-4 text-green-500" />
+                  ) : (
+                    <CopyIcon className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
+              <p
+                ref={roastRef}
+                className="text-gray-700 cursor-default flex-grow"
+                aria-live="polite"
+                dangerouslySetInnerHTML={{ __html: roast }}
+              ></p>
             </div>
           )}
         </CardContent>
