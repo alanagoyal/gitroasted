@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const { githubUrl } = await request.json();
 
   const stagehand = new Stagehand({
-    env: "LOCAL",
+    env: "BROWSERBASE",
     verbose: 1,
     debugDom: true,
     domSettleTimeoutMs: 10000,
