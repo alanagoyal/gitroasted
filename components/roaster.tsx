@@ -35,6 +35,7 @@ export function Roaster() {
   const [loadingRoast, setLoadingRoast] = useState("");
   const roastRef = useRef<HTMLParagraphElement>(null);
   const [copied, setCopied] = useState(false);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -78,12 +79,14 @@ export function Roaster() {
     setLoading(true);
     setRoast("");
 
-    const username = extractUsername(githubUrl);
-    if (!username) {
+    const extractedUsername = extractUsername(githubUrl);
+    if (!extractedUsername) {
       setRoast("Invalid input. Please enter a valid GitHub URL or username.");
       setLoading(false);
       return;
     }
+
+    setUsername(extractedUsername);
 
     try {
       const response = await fetch("/api/roast", {
@@ -91,7 +94,7 @@ export function Roaster() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ githubUrl: `https://github.com/${username}` }),
+        body: JSON.stringify({ githubUrl: `https://github.com/${extractedUsername}` }),
       });
 
       if (!response.ok) {
@@ -174,7 +177,7 @@ export function Roaster() {
               <div className="mt-6 p-4 bg-gray-100 rounded-md">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-lg font-semibold">
-                    @{extractUsername(githubUrl)}
+                    @{username}
                   </h2>
                   <Button
                     variant="ghost"
