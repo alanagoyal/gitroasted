@@ -40,15 +40,12 @@ export function Roaster() {
     let interval: NodeJS.Timeout;
     if (loading) {
       let index = 0;
+      setLoadingRoast(loadingRoasts[index]);
+      index++;
       interval = setInterval(() => {
-        if (index === 0) {
-          setLoadingRoast(loadingRoasts[index]);
-          index++;
-        } else {
-          setLoadingRoast(loadingRoasts[index]);
-          index = (index + 1) % (loadingRoasts.length - 1) + 1;
-        }
-      }, 5000);
+        setLoadingRoast(loadingRoasts[index]);
+        index = (index + 1) % (loadingRoasts.length - 1) + 1;
+      }, 3000);
     } else {
       setLoadingRoast("");
     }
