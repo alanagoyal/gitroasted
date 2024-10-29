@@ -13,8 +13,20 @@ import {
 import { GitHubLogoIcon, CopyIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
-const loadingRoasts = [
+const loadingRoasts = [ 
   "Starting up a Browserbase session...",
   "Analyzing your 'professional' selfie taken in a gaming chair...",
   "Counting how many times you've forked 'awesome-lists'...",
@@ -28,7 +40,29 @@ const loadingRoasts = [
   "Calculating your 'it works on my machine' incidents...",
 ];
 
+// Define the validation schema
+const formSchema = z.object({
+  githubUrl: z
+    .string()
+    .min(1, "Input is required")
+    .regex(
+      /^(https:\/\/github\.com\/[a-zA-Z0-9-]+|[a-zA-Z0-9-]+)$/,
+      "Invalid input. Must be a valid GitHub URL or username."
+    ),
+});
+
+// Define the form schema type
+type FormValues = z.infer<typeof formSchema>
+
 export function Roaster() {
+  // Initialize form with useForm hook
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      githubUrl: "",
+    },
+  });
+
   const [githubUrl, setGithubUrl] = useState("");
   const [roast, setRoast] = useState("");
   const [loading, setLoading] = useState(false);
@@ -74,12 +108,12 @@ export function Roaster() {
     return input; // Assume input is a username if it doesn't start with "http"
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Modify onSubmit to use form values
+  const onSubmit = async (data: FormValues) => {
     setLoading(true);
     setRoast("");
 
-    const extractedUsername = extractUsername(githubUrl);
+    const extractedUsername = extractUsername(data.githubUrl);
     if (!extractedUsername) {
       setRoast("Invalid input. Please enter a valid GitHub URL or username.");
       setLoading(false);
@@ -147,59 +181,65 @@ export function Roaster() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="relative">
-                <GitHubLogoIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
-                <Input
-                  type="text"
-                  placeholder="GitHub username or URL"
-                  value={githubUrl}
-                  onChange={(e) => setGithubUrl(e.target.value)}
-                  required
-                  className="pl-10"
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="githubUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input 
+                          placeholder="GitHub username or URL"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Roasting..." : "Roast Me!"}
-              </Button>
-            </form>
-            {loading && (
-              <div className="mt-6 p-4 bg-gray-100 rounded-md">
-                <div className="flex items-center space-x-2 overflow-hidden">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <p className="text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                    {loadingRoast}
-                  </p>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? "Roasting..." : "Roast Me!"}
+                </Button>
+              </form>
+              {loading && (
+                <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                  <div className="flex items-center space-x-2 overflow-hidden">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <p className="text-gray-700 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                      {loadingRoast}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
-            {roast && !loading && (
-              <div className="mt-6 p-4 bg-gray-100 rounded-md">
-                <div className="flex justify-between items-center mb-2">
-                  <h2 className="text-lg font-semibold">
-                    @{username}
-                  </h2>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={handleCopy}
-                    aria-label={copied ? "Copied" : "Copy roast"}
-                  >
-                    {copied ? (
-                      <CheckIcon className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <CopyIcon className="h-4 w-4" />
-                    )}
-                  </Button>
+              )}
+              {roast && !loading && (
+                <div className="mt-6 p-4 bg-gray-100 rounded-md">
+                  <div className="flex justify-between items-center mb-2">
+                    <h2 className="text-lg font-semibold">
+                      @{username}
+                    </h2>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleCopy}
+                      aria-label={copied ? "Copied" : "Copy roast"}
+                    >
+                      {copied ? (
+                        <CheckIcon className="h-4 w-4 text-green-500" />
+                      ) : (
+                        <CopyIcon className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  <p
+                    ref={roastRef}
+                    className="text-sm text-gray-700 cursor-default flex-grow"
+                    aria-live="polite"
+                    dangerouslySetInnerHTML={{ __html: roast }}
+                  ></p>
                 </div>
-                <p
-                  ref={roastRef}
-                  className="text-sm text-gray-700 cursor-default flex-grow"
-                  aria-live="polite"
-                  dangerouslySetInnerHTML={{ __html: roast }}
-                ></p>
-              </div>
-            )}
+              )}
+            </Form>
           </CardContent>
         </Card>
       </div>
