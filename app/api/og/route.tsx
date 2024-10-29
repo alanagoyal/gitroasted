@@ -14,9 +14,21 @@ export async function GET() {
           textAlign: 'center',
           justifyContent: 'center',
           alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        🔥 Roasted
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+          🔥 Roasted
+        </div>
+        <div style={{
+          fontSize: 24,
+          color: '#9CA3AF',
+          position: 'absolute',
+          bottom: 40,
+        }}>
+          built by basecase 🤝🏼 powered by browserbase
+        </div>
       </div>
     ),
     {
