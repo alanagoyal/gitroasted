@@ -114,7 +114,7 @@ export function Roaster() {
           {roast && !loading && (
             <div className="mt-6 p-4 bg-gray-100 rounded-md">
               <h2 className="text-lg font-semibold mb-2">Your Roast:</h2>
-              <p ref={roastRef} className="text-gray-700 cursor-default" aria-live="polite"></p>
+              <p ref={roastRef} className="text-gray-700 cursor-default" aria-live="polite" dangerouslySetInnerHTML={{ __html: roast }}></p>
             </div>
           )}
         </CardContent>
