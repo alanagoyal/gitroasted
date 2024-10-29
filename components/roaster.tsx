@@ -114,7 +114,7 @@ export function Roaster() {
             GitHub Profile Roaster
           </CardTitle>
           <CardDescription className="text-left">
-            Paste your GitHub profile URL and get roasted!
+            Paste your Github profile below to get roasted
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -171,6 +171,9 @@ export function Roaster() {
           )}
         </CardContent>
       </Card>
+      <footer className="mt-8 text-sm text-gray-500">
+        built with by <a href="https://basecase.vc" className="underline">basecase</a> 🤝🏼 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
+      </footer>
     </main>
   );
 }
