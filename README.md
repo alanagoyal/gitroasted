@@ -1,12 +1,6 @@
-# Roasted
+# GitRoasted
 
 This project uses [Stagehand](https://github.com/browserbase/stagehand) by [Browserbase](https://browserbase.com) to automate the browser to roast a given GitHub profile.
-
-## Features
-
-- **GitHub Profile Roasting**: Enter your GitHub profile URL and get a funny roast based on your profile.
-- **Dynamic Loading Messages**: Enjoy a series of humorous loading messages while your roast is being prepared.
-- **Copy to Clipboard**: Easily copy your roast to the clipboard with a single click.
 
 ## Getting Started
 
