@@ -23,18 +23,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-const loadingRoasts = [ 
+const loadingRoasts = [
   "Starting up a Browserbase session...",
-  "Analyzing your 'professional' selfie taken in a gaming chair...",
-  "Counting how many times you've forked 'awesome-lists'...",
+  "Analyzing your 'professional' selfie...",
   "Measuring the dust on your abandoned side projects...",
   "Calculating the ratio of README updates to actual code...",
-  "Scanning commit messages for 'fixed typo' and 'minor changes'...",
-  "Evaluating your Stack Overflow copy-paste efficiency...",
-  "Counting how many times you've starred your own repos...",
+  "Scanning commit messages for 'fixed typo'...",
+  "Evaluating your Stack Overflow copy-paste skills...",
   "Analyzing your creative ways of avoiding unit tests...",
   "Measuring the staleness of your dependencies...",
-  "Calculating your 'it works on my machine' incidents...",
+  "Measuring test avoidance skills...",
+  "Tallying temporary fixes...",
+  "Measuring your TODO comment depth...",
+  "Counting tabs vs spaces wars...",
+  "Rating variable name creativity...",
+  "Counting console.log debugs...",
+  "Sizing up your fix-later backlog...",
+  "Tallying your 'works in dev' bugs...",
+  "Rating your documentation neglect..."
 ];
 
 // Define the validation schema
@@ -74,9 +80,8 @@ export function Roaster() {
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (loading) {
-      let index = 0;
-      setLoadingRoast(loadingRoasts[index]);
-      index++;
+      setLoadingRoast(loadingRoasts[0]);
+      let index = 1;
       interval = setInterval(() => {
         setLoadingRoast(loadingRoasts[index]);
         index = (index + 1) % (loadingRoasts.length - 1) + 1;
@@ -169,7 +174,7 @@ export function Roaster() {
 
   return (
     <main
-      className="flex min-h-screen flex-col items-center p-4 pb-16 sm:p-8"
+      className="flex min-h-screen flex-col items-center p-4 pb-24 sm:p-8"
       style={{
         backgroundColor: 'black',
         backgroundImage: `url(${backgroundImage})`,
@@ -177,7 +182,7 @@ export function Roaster() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="flex-grow flex items-center justify-center w-full py-4">
+      <div className="flex-grow flex items-center justify-center w-full py-4 mb-16">
         <Card className="w-full max-w-lg mx-4">
           <CardHeader>
             <CardTitle className="text-2xl sm:text-5xl font-bold text-left" style={{ fontFamily: "'UnifrakturCook', cursive", fontSize: "72px", lineHeight: "1.2" }}>
@@ -273,7 +278,7 @@ export function Roaster() {
           </CardContent>
         </Card>
       </div>
-      <footer className="text-xs sm:text-sm text-gray-300 absolute bottom-8">
+      <footer className="text-xs sm:text-sm text-gray-300 fixed bottom-8">
         built by <a href="https://basecase.vc" className="underline">basecase</a> 🤝 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
       </footer>
     </main>
