@@ -51,6 +51,10 @@ const formSchema = z.object({
 // Define the form schema type
 type FormValues = z.infer<typeof formSchema>
 
+const createTweetText = (username: string, roast: string) => {
+  return `🔥 Just got roasted on GitRoasted:\n\n${roast}\n\nGet roasted at https://roasted.basecase.vc`;
+};
+
 export function Roaster() {
   // Initialize form with useForm hook
   const form = useForm<FormValues>({
@@ -153,6 +157,14 @@ export function Roaster() {
     }
   };
 
+  const handleTweetShare = () => {
+    if (roast) {
+      const tweetText = createTweetText(username, roastRef.current?.innerText || roast);
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+      window.open(tweetUrl, '_blank');
+    }
+  };
+
   const backgroundImage = '/fireplace.gif';
 
   return (
@@ -169,7 +181,7 @@ export function Roaster() {
         <Card className="w-full max-w-lg mx-4">
           <CardHeader>
             <CardTitle className="text-xl sm:text-2xl font-bold text-left">
-              GitHub Profile Roaster
+              GitRoasted
             </CardTitle>
             <CardDescription className="text-left text-sm sm:text-base">
               Paste your GitHub profile below to get roasted
@@ -217,18 +229,37 @@ export function Roaster() {
                     <h2 className="text-lg font-semibold">
                       @{username}
                     </h2>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleCopy}
-                      aria-label={copied ? "Copied" : "Copy roast"}
-                    >
-                      {copied ? (
-                        <CheckIcon className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <CopyIcon className="h-4 w-4" />
-                      )}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleTweetShare}
+                        aria-label="Share on X (Twitter)"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-4 w-4"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                          />
+                        </svg>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleCopy}
+                        aria-label={copied ? "Copied" : "Copy roast"}
+                      >
+                        {copied ? (
+                          <CheckIcon className="h-4 w-4 text-green-500" />
+                        ) : (
+                          <CopyIcon className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
                   </div>
                   <p
                     ref={roastRef}

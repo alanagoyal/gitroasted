@@ -19,7 +19,7 @@ export async function GET() {
         }}
       >
         <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-          🔥 Roasted
+          🔥 GitRoasted
         </div>
         <div style={{
           fontSize: 24,

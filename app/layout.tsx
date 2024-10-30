@@ -9,11 +9,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Roasted",
-  description: "Roasted: GitHub Profile Roaster",
+  title: "GitRoasted",
+  description: "GitRoasted: Roast your GitHub profile with AI",
   openGraph: {
-    title: "Roasted",
-    description: "Roasted: GitHub Profile Roaster",
+    title: "GitRoasted",
+    description: "GitRoasted: Roast your GitHub profile with AI",
     images: ["/api/og"],
   },
 };
