@@ -52,7 +52,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 const createTweetText = (username: string, roast: string) => {
-  return `🔥 Just got roasted on GitRoasted:\n\n${roast}\n\nGet roasted at https://roasted.basecase.vc`;
+  return `🔥 Just got roasted on GitRoasted:\n\n${roast}\n\nGet roasted at ${process.env.NEXT_PUBLIC_URL}`;
 };
 
 export function Roaster() {
