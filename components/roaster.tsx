@@ -169,7 +169,7 @@ export function Roaster() {
 
   return (
     <main
-      className="flex min-h-screen flex-col items-center justify-between p-4 sm:p-24"
+      className="flex min-h-screen flex-col items-center p-4 pb-16 sm:p-24 sm:pb-16"
       style={{
         backgroundColor: 'black',
         backgroundImage: `url(${backgroundImage})`,
@@ -273,7 +273,7 @@ export function Roaster() {
           </CardContent>
         </Card>
       </div>
-      <footer className="text-xs sm:text-sm text-gray-400 mt-4">
+      <footer className="text-xs sm:text-sm text-gray-400 absolute bottom-8">
         built by <a href="https://basecase.vc" className="underline">basecase</a> 🤝 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
       </footer>
     </main>
