@@ -40,7 +40,7 @@ const loadingRoasts = [
   "Counting console.log debugs...",
   "Sizing up your fix-later backlog...",
   "Tallying your 'works in dev' bugs...",
-  "Rating your documentation neglect..."
+  "Rating your documentation neglect...",
 ];
 
 // Define the validation schema
@@ -55,7 +55,7 @@ const formSchema = z.object({
 });
 
 // Define the form schema type
-type FormValues = z.infer<typeof formSchema>
+type FormValues = z.infer<typeof formSchema>;
 
 const createTweetText = (username: string, roast: string) => {
   return `🔥 Just got roasted on GitRoasted:\n\n${roast}\n\nGet roasted at ${process.env.NEXT_PUBLIC_URL}`;
@@ -76,7 +76,9 @@ export function Roaster() {
   const roastRef = useRef<HTMLParagraphElement>(null);
   const [copied, setCopied] = useState(false);
   const [username, setUsername] = useState("");
-  const inputRef = useRef<HTMLInputElement | null>(null) as React.MutableRefObject<HTMLInputElement | null>;
+  const inputRef = useRef<HTMLInputElement | null>(
+    null
+  ) as React.MutableRefObject<HTMLInputElement | null>;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -85,7 +87,7 @@ export function Roaster() {
       let index = 1;
       interval = setInterval(() => {
         setLoadingRoast(loadingRoasts[index]);
-        index = (index + 1) % (loadingRoasts.length - 1) + 1;
+        index = ((index + 1) % (loadingRoasts.length - 1)) + 1;
       }, 3000);
     } else {
       setLoadingRoast("");
@@ -138,7 +140,9 @@ export function Roaster() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ githubUrl: `https://github.com/${extractedUsername}` }),
+        body: JSON.stringify({
+          githubUrl: `https://github.com/${extractedUsername}`,
+        }),
       });
 
       if (!response.ok) {
@@ -162,35 +166,47 @@ export function Roaster() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
-        console.error('Failed to copy text: ', err);
+        console.error("Failed to copy text: ", err);
       }
     }
   };
 
   const handleTweetShare = () => {
     if (roast) {
-      const tweetText = createTweetText(username, roastRef.current?.innerText || roast);
-      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-      window.open(tweetUrl, '_blank');
+      const tweetText = createTweetText(
+        username,
+        roastRef.current?.innerText || roast
+      );
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        tweetText
+      )}`;
+      window.open(tweetUrl, "_blank");
     }
   };
 
-  const backgroundImage = '/fireplace.gif';
+  const backgroundImage = "/fireplace.gif";
 
   return (
     <main
       className="flex min-h-screen flex-col items-center p-4 pb-24 sm:p-8"
       style={{
-        backgroundColor: 'black',
+        backgroundColor: "black",
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <div className="flex-grow flex items-center justify-center w-full py-4 mb-16">
         <Card className="w-full max-w-lg mx-4">
           <CardHeader>
-            <CardTitle className="text-2xl sm:text-5xl font-bold text-left" style={{ fontFamily: "'UnifrakturCook', cursive", fontSize: "72px", lineHeight: "1.2" }}>
+            <CardTitle
+              className="text-2xl sm:text-5xl font-bold text-left"
+              style={{
+                fontFamily: "'UnifrakturCook', cursive",
+                fontSize: "72px",
+                lineHeight: "1.2",
+              }}
+            >
               GitRoasted
             </CardTitle>
             <CardDescription className="text-left text-sm sm:text-base">
@@ -199,7 +215,10 @@ export function Roaster() {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={form.control}
                   name="githubUrl"
@@ -208,7 +227,7 @@ export function Roaster() {
                       <FormControl>
                         <div className="relative">
                           <GitHubLogoIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-                          <Input 
+                          <Input
                             placeholder="GitHub username or URL"
                             className="pl-8 text-base placeholder:text-sm"
                             {...field}
@@ -242,9 +261,7 @@ export function Roaster() {
               {roast && !loading && (
                 <div className="mt-4 p-4 bg-gray-100 rounded-md">
                   <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-lg font-semibold">
-                      @{username}
-                    </h2>
+                    <h2 className="text-lg font-semibold">@{username}</h2>
                     <div className="flex gap-2">
                       <Button
                         variant="ghost"
@@ -290,7 +307,32 @@ export function Roaster() {
         </Card>
       </div>
       <footer className="text-xs sm:text-sm text-gray-300 fixed bottom-8">
-        built by <a href="https://basecase.vc" className="underline">basecase</a> 🤝 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
+        <a
+          href="https://basecase.vc"
+          className="underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          built by basecase
+        </a>{" "}
+        •{" "}
+        <a
+          href="https://browserbase.com"
+          className="underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          powered by browserbase
+        </a>{" "}
+        •{" "}
+        <a
+          href="https://github.com/alanagoyal/gitroasted"
+          className="underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          view on github
+        </a>
       </footer>
     </main>
   );
