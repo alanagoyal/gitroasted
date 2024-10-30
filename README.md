@@ -9,8 +9,8 @@ This project uses [Stagehand](https://github.com/browserbase/stagehand) by [Brow
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/alanagoyal/roasted.git
-   cd roasted
+   git clone https://github.com/alanagoyal/gitroasted.git
+   cd gitroasted
    ```
 
 2. Install the dependencies:
