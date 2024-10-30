@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { UnifrakturCook } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const unifrakturCook = UnifrakturCook({
+  weight: "700",
+  subsets: ["latin"],
+  variable: "--font-unifraktur",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body className={`font-sans ${inter.variable} ${unifrakturCook.variable}`}>
         {children}
         <Toaster />
       </body>
