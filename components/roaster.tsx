@@ -169,7 +169,7 @@ export function Roaster() {
 
   return (
     <main
-      className="flex min-h-screen flex-col items-center p-4 pb-16 sm:p-24 sm:pb-16"
+      className="flex min-h-screen flex-col items-center p-4 pb-16 sm:p-8"
       style={{
         backgroundColor: 'black',
         backgroundImage: `url(${backgroundImage})`,
@@ -180,7 +180,7 @@ export function Roaster() {
       <div className="flex-grow flex items-center justify-center w-full py-4">
         <Card className="w-full max-w-lg mx-4">
           <CardHeader>
-            <CardTitle className="text-2xl sm:text-5xl font-bold text-left" style={{ fontFamily: "'UnifrakturCook', cursive" }}>
+            <CardTitle className="text-2xl sm:text-5xl font-bold text-left" style={{ fontFamily: "'UnifrakturCook', cursive", fontSize: "72px", lineHeight: "1.2" }}>
               GitRoasted
             </CardTitle>
             <CardDescription className="text-left text-sm sm:text-base">
@@ -273,7 +273,7 @@ export function Roaster() {
           </CardContent>
         </Card>
       </div>
-      <footer className="text-xs sm:text-sm text-gray-400 absolute bottom-8">
+      <footer className="text-xs sm:text-sm text-gray-300 absolute bottom-8">
         built by <a href="https://basecase.vc" className="underline">basecase</a> 🤝 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
       </footer>
     </main>
