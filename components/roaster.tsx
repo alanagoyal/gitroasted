@@ -157,7 +157,7 @@ export function Roaster() {
 
   return (
     <main
-      className="flex min-h-screen flex-col items-center justify-between p-24"
+      className="flex min-h-screen flex-col items-center justify-between p-4 sm:p-24"
       style={{
         backgroundColor: 'black',
         backgroundImage: `url(${backgroundImage})`,
@@ -165,13 +165,13 @@ export function Roaster() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="flex-grow flex items-center justify-center w-full">
-        <Card className="w-full max-w-lg">
+      <div className="flex-grow flex items-center justify-center w-full py-4">
+        <Card className="w-full max-w-lg mx-4">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-left">
+            <CardTitle className="text-xl sm:text-2xl font-bold text-left">
               GitHub Profile Roaster
             </CardTitle>
-            <CardDescription className="text-left">
+            <CardDescription className="text-left text-sm sm:text-base">
               Paste your GitHub profile below to get roasted
             </CardDescription>
           </CardHeader>
@@ -188,7 +188,7 @@ export function Roaster() {
                           <GitHubLogoIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
                           <Input 
                             placeholder="GitHub username or URL"
-                            className="pl-8"
+                            className="pl-8 text-base placeholder:text-sm"
                             {...field}
                           />
                         </div>
@@ -242,7 +242,7 @@ export function Roaster() {
           </CardContent>
         </Card>
       </div>
-      <footer className="text-sm text-gray-400">
+      <footer className="text-xs sm:text-sm text-gray-400 mt-4">
         built by <a href="https://basecase.vc" className="underline">basecase</a> 🤝🏼 powered by <a href="https://browserbase.com" className="underline">browserbase</a>
       </footer>
     </main>
