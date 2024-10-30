@@ -76,6 +76,7 @@ export function Roaster() {
   const roastRef = useRef<HTMLParagraphElement>(null);
   const [copied, setCopied] = useState(false);
   const [username, setUsername] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null) as React.MutableRefObject<HTMLInputElement | null>;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -104,6 +105,10 @@ export function Roaster() {
         .join("");
     }
   }, [roast]);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const extractUsername = (input: string) => {
     if (input.startsWith("http")) {
@@ -207,6 +212,12 @@ export function Roaster() {
                             placeholder="GitHub username or URL"
                             className="pl-8 text-base placeholder:text-sm"
                             {...field}
+                            ref={(e) => {
+                              if (e) {
+                                field.ref(e);
+                                inputRef.current = e;
+                              }
+                            }}
                           />
                         </div>
                       </FormControl>
