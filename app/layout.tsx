@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     title: "GitRoasted",
     description: "GitRoasted: Roast your GitHub profile with AI",
     images: ["/api/og"],
+    siteName: "GitRoasted",
+    url: process.env.NEXT_PUBLIC_URL,
   },
 };
 
