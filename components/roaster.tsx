@@ -95,16 +95,14 @@ export function Roaster() {
     return () => clearInterval(interval);
   }, [loading]);
 
+  // Character animation state for safe rendering
+  const [animatedChars, setAnimatedChars] = useState<string[]>([]);
+
   useEffect(() => {
-    if (roast && roastRef.current) {
-      const text = roastRef.current;
-      text.innerHTML = roast
-        .split("")
-        .map(
-          (char) =>
-            `<span class="inline-block transition-transform duration-300 ease-in-out transform hover:scale-125 hover:-translate-y-1">${char}</span>`
-        )
-        .join("");
+    if (roast) {
+      setAnimatedChars(roast.split(""));
+    } else {
+      setAnimatedChars([]);
     }
   }, [roast]);
 
@@ -298,8 +296,16 @@ export function Roaster() {
                     ref={roastRef}
                     className="text-sm text-gray-700 cursor-default flex-grow"
                     aria-live="polite"
-                    dangerouslySetInnerHTML={{ __html: roast }}
-                  ></p>
+                  >
+                    {animatedChars.map((char, index) => (
+                      <span
+                        key={index}
+                        className="inline-block transition-transform duration-300 ease-in-out transform hover:scale-125 hover:-translate-y-1"
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </span>
+                    ))}
+                  </p>
                 </div>
               )}
             </Form>
