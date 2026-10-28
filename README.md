@@ -1,27 +1,27 @@
-# GitRoasted
+# gitroasted
 
-This project uses [Stagehand](https://github.com/browserbase/stagehand) by [Browserbase](https://browserbase.com) to automate the browser to roast a given GitHub profile.
+this project uses [stagehand](https://github.com/browserbase/stagehand) by [browserbase](https://browserbase.com) to automate the browser to roast a given github profile.
 
-## Getting Started
+## getting started
 
-### Installation
+### installation
 
-1. Clone the repository:
+1. clone the repository:
 
    ```bash
    git clone https://github.com/alanagoyal/gitroasted.git
    cd gitroasted
    ```
 
-2. Install the dependencies:
+2. install the dependencies:
 
    ```bash
    npm install
    ```
 
-3. Set up environment variables:
+3. set up environment variables:
 
-   Create a `.env` file in the root directory and add your API keys:
+   create a `.env` file in the root directory and add your api keys:
 
    ```plaintext
    OPENAI_API_KEY="your-openai-api-key"
@@ -30,24 +30,24 @@ This project uses [Stagehand](https://github.com/browserbase/stagehand) by [Brow
    BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
    ```
 
-### Run
+### run
 
-Start the development server:
+start the development server:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the application in action.
+open [http://localhost:3000](http://localhost:3000) with your browser to see the application in action.
 
-## Deploy 
+## deploy 
 
-Deploy using [Vercel](https://vercel.com)
+deploy using [vercel](https://vercel.com)
 
-## Contributing
+## contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+contributions are welcome! please open an issue or submit a pull request for any improvements or bug fixes.
 
-## License
+## license
 
-This project is licensed under the MIT License.
+this project is licensed under the mit license.
