@@ -1,5 +1,7 @@
 # gitroasted
 
+> **status:** the hosted website is no longer live as of november 12, 2026. the source code remains available for reference and self-hosting.
+
 this project uses [stagehand](https://github.com/browserbase/stagehand) by [browserbase](https://browserbase.com) to automate the browser to roast a given github profile.
 
 ## getting started
